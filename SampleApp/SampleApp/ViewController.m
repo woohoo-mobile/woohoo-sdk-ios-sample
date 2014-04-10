@@ -8,8 +8,7 @@
 
 #import "ViewController.h"
 #import "WoohooSDK.h"
-#import "WOOOffersController.h"
-#import "UIView+WOOAdditions.h"
+
 
 @interface ViewController () <WOOOffersControllerDelegate>
 
