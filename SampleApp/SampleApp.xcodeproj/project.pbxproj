@@ -22,8 +22,6 @@
 		F05D8F3118F6A6F600C70D70 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F05D8F1318F6A6F600C70D70 /* UIKit.framework */; };
 		F05D8F3918F6A6F600C70D70 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F05D8F3718F6A6F600C70D70 /* InfoPlist.strings */; };
 		F05D8F3B18F6A6F600C70D70 /* SampleAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F05D8F3A18F6A6F600C70D70 /* SampleAppTests.m */; };
-		F05D8F4918F6BED700C70D70 /* libWoohooOffersSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F05D8F4418F6BED700C70D70 /* libWoohooOffersSDK.a */; };
-		F0BF889718F6D2F300F6523F /* WoohooOffersSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F0BF889618F6D2F300F6523F /* WoohooOffersSDKResources.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,9 +56,6 @@
 		F05D8F3618F6A6F600C70D70 /* SampleAppTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SampleAppTests-Info.plist"; sourceTree = "<group>"; };
 		F05D8F3818F6A6F600C70D70 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F05D8F3A18F6A6F600C70D70 /* SampleAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SampleAppTests.m; sourceTree = "<group>"; };
-		F05D8F4418F6BED700C70D70 /* libWoohooOffersSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWoohooOffersSDK.a; sourceTree = "<group>"; };
-		F05D8F4718F6BED700C70D70 /* WoohooSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WoohooSDK.h; sourceTree = "<group>"; };
-		F0BF889618F6D2F300F6523F /* WoohooOffersSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = WoohooOffersSDKResources.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +66,6 @@
 				F05D8F1218F6A6F600C70D70 /* CoreGraphics.framework in Frameworks */,
 				F05D8F1418F6A6F600C70D70 /* UIKit.framework in Frameworks */,
 				F05D8F1018F6A6F600C70D70 /* Foundation.framework in Frameworks */,
-				F05D8F4918F6BED700C70D70 /* libWoohooOffersSDK.a in Frameworks */,
 				0259EB1A95924D9D8ECDB9C1 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -92,9 +86,6 @@
 		F05D8F0318F6A6F600C70D70 = {
 			isa = PBXGroup;
 			children = (
-				F0BF889618F6D2F300F6523F /* WoohooOffersSDKResources.bundle */,
-				F05D8F4418F6BED700C70D70 /* libWoohooOffersSDK.a */,
-				F05D8F4718F6BED700C70D70 /* WoohooSDK.h */,
 				F05D8F1518F6A6F600C70D70 /* SampleApp */,
 				F05D8F3418F6A6F600C70D70 /* SampleAppTests */,
 				F05D8F0E18F6A6F600C70D70 /* Frameworks */,
@@ -245,7 +236,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0BF889718F6D2F300F6523F /* WoohooOffersSDKResources.bundle in Resources */,
 				F05D8F2818F6A6F600C70D70 /* Images.xcassets in Resources */,
 				F05D8F1A18F6A6F600C70D70 /* InfoPlist.strings in Resources */,
 				F05D8F2318F6A6F600C70D70 /* Main.storyboard in Resources */,
