@@ -8,6 +8,8 @@
 
 #import "ViewController.h"
 #import "WoohooSDK.h"
+#import "WOOOffersController.h"
+#import "UIView+WOOAdditions.h"
 
 
 @interface ViewController () <WOOOffersControllerDelegate>
@@ -35,10 +37,10 @@
     [self.startSDKButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     [self.startSDKButton addTarget:self action:@selector(onStartSDKButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     
-    NSString *secret = @"b3GytUrWLj0YGim37WgW4+22qld/xEkFzVJSxYR1EDpIV1Uq/SyO73185OhWOMyr7LV+3xITnHDzUj4zL1h7Jw==";
-    NSString *APIKey = @"3Xu4IpvloXrbmQ==";
+    NSString *secret = @"ZxvODOFezGTfZ6hQEdqbZIQlmSGVP7WoZxiZVIMafEUl7SasQ+eQgPrCYVN+1cviM7mCjugbOW7b53vvzTpJuA==";
+    NSString *APIKey = @"paTnIrCQbPcjTg==";
     self.woohooSDK = [[WoohooSDK alloc] initWithAPIKey:APIKey APISecret:secret sandboxMode:YES];
-    self.woohooSDK.balance = 100000;
+    self.woohooSDK.balance = 10000;
     
     self.balanceLabel = UILabel.new;
     self.balanceLabel.text = @"Set Virtual Balance:";
