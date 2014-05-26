@@ -27,19 +27,35 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = UIColor.whiteColor;
-    
     self.startSDKButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.startSDKButton setTitle:@"Start Woohoo SDK" forState:UIControlStateNormal];
     [self.startSDKButton setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
     self.startSDKButton.backgroundColor = UIColor.whiteColor;
     self.startSDKButton.layer.borderColor = [UIColor blackColor].CGColor;
     self.startSDKButton.layer.borderWidth = 2.f;
     [self.startSDKButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-    [self.startSDKButton addTarget:self action:@selector(onStartSDKButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     
     NSString *secret = @"ZxvODOFezGTfZ6hQEdqbZIQlmSGVP7WoZxiZVIMafEUl7SasQ+eQgPrCYVN+1cviM7mCjugbOW7b53vvzTpJuA==";
     NSString *APIKey = @"paTnIrCQbPcjTg==";
-    self.woohooSDK = [[WoohooSDK alloc] initWithAPIKey:APIKey APISecret:secret sandboxMode:YES];
+    self.woohooSDK = [[WoohooSDK alloc] initWithAPIKey:APIKey APISecret:secret sandboxMode:YES success:^(BOOL available) {
+        NSLog(available ? @"Success Callback: Yes" : @"Success Callback: No");
+        if(available){
+            [self.startSDKButton setTitle:@"Start Woohoo SDK" forState:UIControlStateNormal];
+            [self.startSDKButton addTarget:self action:@selector(onStartSDKButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+            [self.view addSubview:self.startSDKButton];
+
+        }
+        else {
+            [self.startSDKButton setTitle:@"Offers n/a in your Region" forState:UIControlStateNormal];
+            [self.view addSubview:self.startSDKButton];
+        }
+        
+    } failure:^(NSError *err) {
+        NSLog(@"Failure Callback");
+        [self.startSDKButton setTitle:@"Offer availability check failed!" forState:UIControlStateNormal];
+        [self.view addSubview:self.startSDKButton];
+    }];
+
+    self.woohooSDK.virtualCurrencyName = @"Tokens";
     self.woohooSDK.balance = 10000;
     
     self.balanceLabel = UILabel.new;
@@ -51,7 +67,6 @@
     UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundTapped)];
     [self.view addGestureRecognizer:tgr];
     
-    [self.view addSubview:self.startSDKButton];
     [self.view addSubview:self.balanceLabel];
     [self.view addSubview:self.balanceTextField];
 }
