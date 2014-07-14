@@ -34,32 +34,15 @@
     self.startSDKButton.layer.borderWidth = 2.f;
     [self.startSDKButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     
+    // initialize the SDK
     NSString *secret = @"ZxvODOFezGTfZ6hQEdqbZIQlmSGVP7WoZxiZVIMafEUl7SasQ+eQgPrCYVN+1cviM7mCjugbOW7b53vvzTpJuA==";
     NSString *APIKey = @"paTnIrCQbPcjTg==";
-    self.woohooSDK = [[WoohooSDK alloc] initWithAPIKey:APIKey APISecret:secret sandboxMode:YES success:^(BOOL available) {
-        NSLog(available ? @"Success Callback: Yes" : @"Success Callback: No");
-        if(available){
-            [self.startSDKButton setTitle:@"Start Woohoo SDK" forState:UIControlStateNormal];
-            [self.startSDKButton addTarget:self action:@selector(onStartSDKButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-            [self.view addSubview:self.startSDKButton];
-
-        }
-        else {
-            [self.startSDKButton setTitle:@"Offers n/a in your Region" forState:UIControlStateNormal];
-            [self.view addSubview:self.startSDKButton];
-        }
-        
-    } failure:^(NSError *err) {
-        NSLog(@"Failure Callback");
-        [self.startSDKButton setTitle:@"Offer availability check failed!" forState:UIControlStateNormal];
-        [self.view addSubview:self.startSDKButton];
-    }];
-
-    self.woohooSDK.virtualCurrencyName = @"Tokens";
-    self.woohooSDK.balance = 10000;
+    self.woohooSDK = [[WoohooSDK alloc] initWithAPIKey:APIKey APISecret:secret sandboxMode:YES];
+    [WoohooSDK setSharedInstance:self.woohooSDK];
     
     self.balanceLabel = UILabel.new;
     self.balanceLabel.text = @"Set Virtual Balance:";
+    
     self.balanceTextField = UITextField.new;
     self.balanceTextField.textAlignment = NSTextAlignmentCenter;
     self.balanceTextField.backgroundColor = [UIColor lightGrayColor];
@@ -67,9 +50,16 @@
     UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundTapped)];
     [self.view addGestureRecognizer:tgr];
     
+    [self.startSDKButton setTitle:@"Start Woohoo SDK" forState:UIControlStateNormal];
+    [self.startSDKButton addTarget:self action:@selector(onStartSDKButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.startSDKButton];
+    
     [self.view addSubview:self.balanceLabel];
     [self.view addSubview:self.balanceTextField];
-}
+    
+    [self.startSDKButton setTitle:@"Start Woohoo SDK" forState:UIControlStateNormal];
+    [self.startSDKButton addTarget:self action:@selector(onStartSDKButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.startSDKButton];}
 
 - (void)backgroundTapped {
     [self.view woosdk_findAndResignFirstResponder];
@@ -78,8 +68,33 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    // make availability check when screen is shown
+    [[WoohooSDK sharedInstance] checkStatusWithCallback:^(BOOL available, NSInteger offerCount) {
+        NSLog(available ? @"Success Callback(checkStatusWithCallback): Yes" : @"Success Callback(checkStatusWithCallback): No");
+        if(available) {
+            NSLog(@"New offers available: %d", offerCount);
+            self.startSDKButton.hidden = FALSE;
+            self.balanceTextField.hidden = FALSE;
+            self.balanceLabel.text = @"Set Virtual Balance:";
+        }
+        else {
+            self.startSDKButton.hidden = TRUE;
+            self.balanceTextField.hidden = TRUE;
+            self.balanceLabel.text = @"Offers n/a in your Region";
+        }
+        
+    } failure:^(NSError *err) {
+        NSLog(@"Failure Callback");
+        self.startSDKButton.hidden = TRUE;
+        self.balanceTextField.hidden = TRUE;
+        self.balanceLabel.text = @"Offer availability check failed!";
+    }];
+    
+    // check for the current user balance
+    self.balanceTextField.text = [self.woohooSDK balanceString];
+    
     [self.navigationController setNavigationBarHidden:YES animated:NO];
-    self.balanceTextField.text = [NSString stringWithFormat:@"%d", self.woohooSDK.balance];
+
 }
 
 - (void)viewDidLayoutSubviews {
